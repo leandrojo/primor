@@ -1,0 +1,17 @@
+{
+  "name": "primer",
+  "version": "0.1.0",
+  "description": "Library of React components that implement a",
+  "author": "Leandro Araujo <contato@leandroaraujo.me>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ],
+    "nohoist": [
+      "react-scripts",
+      "react-scripts/**"
+    ]
+  }
+}

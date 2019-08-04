@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
 import { styled } from '../common/theme';
 
@@ -13,10 +14,10 @@ const StyledButtonToolbar = styled.div`
 export const ButtonToolbarContext = React.createContext({
   buttonToolbar: false,
   include: () => {},
-  spacing: false,
+  spacingBetween: 5,
 });
 
-const ButtonToolbar = ({ children, ...rest }) => {
+const ButtonToolbar = ({ children, spacingBetween, ...rest }) => {
   const [options, setOptions] = useState([]);
 
   const include = (data) => {
@@ -33,8 +34,9 @@ const ButtonToolbar = ({ children, ...rest }) => {
   return (
     <ButtonToolbarContext.Provider
       value={{
-        buttonGroup: true,
+        buttonToolbar: true,
         include,
+        spacingBetween,
         options,
         updateState,
       }}
@@ -44,8 +46,12 @@ const ButtonToolbar = ({ children, ...rest }) => {
   );
 };
 
-ButtonToolbar.defaultProps = {};
+ButtonToolbar.defaultProps = {
+  spacingBetween: 5,
+};
 
-ButtonToolbar.propTypes = {};
+ButtonToolbar.propTypes = {
+  spacingBetween: PropTypes.number,
+};
 
 export default ButtonToolbar;

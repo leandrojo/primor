@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { css, getStyle, styled } from '../common/theme';
 
 import { ButtonGroupContext } from './ButtonGroup';
+import { ButtonToolbarContext } from './ButtonToolbar';
 
 const s = getStyle('button');
 
@@ -50,6 +51,20 @@ export const StyledButton = styled.button`
         &:last-of-type {
           border-bottom-right-radius: ${s('borderRadius')};
           border-top-right-radius: ${s('borderRadius')};
+        }
+        `
+    : '')}
+
+  ${props => (props.buttonToolbar === true
+    ? css`
+        margin: ${props.spacing}px;
+
+        &:first-of-type {
+          margin-left: 0;
+        }
+
+        &:last-of-type {
+          margin-right: 0;
         }
         `
     : '')}
@@ -117,9 +132,10 @@ export const StyledButton = styled.button`
 `;
 
 const Button = ({
-  children, components, onClick, onPress, selected, ...rest
+  children, components, onClick, onPress, spacing, selected, ...rest
 }) => {
   const { buttonGroup, include } = useContext(ButtonGroupContext);
+  const { buttonToolbar, spacingBetween } = useContext(ButtonToolbarContext);
 
   useEffect(() => {
     include({ selected });
@@ -131,11 +147,18 @@ const Button = ({
     onClick();
   };
 
+  const getSpacing = () => {
+    if (spacing === false) return spacingBetween;
+    return spacing;
+  };
+
   return (
     <StyledButton
       buttonGroup={buttonGroup}
+      buttonToolbar={buttonToolbar}
       onClick={handlePress}
       selected={selected}
+      spacing={getSpacing()}
       type="button"
       {...rest}
     >
@@ -151,6 +174,7 @@ Button.defaultProps = {
   outline: false,
   onClick: () => {},
   selected: false,
+  spacing: false,
   size: 'md',
   type: 'default',
 };
@@ -158,12 +182,12 @@ Button.defaultProps = {
 Button.propTypes = {
   contained: PropTypes.bool,
 
-
   /**
    * Boolean when fluid width
    *
    * @type {boolean}
    */
+
   fluid: PropTypes.bool,
 
   onClick: PropTypes.func,
@@ -172,11 +196,14 @@ Button.propTypes = {
 
   selected: PropTypes.bool,
 
+  spacing: PropTypes.oneOfType([PropTypes.bool, PropTypes.number]),
+
   /**
    * The badges size options.
    *
    * @type {'xs' | 'sm' | 'md' | 'lg' | 'xl'}
    */
+
   size: PropTypes.oneOfType([PropTypes.bool, PropTypes.string]),
 
   /**
@@ -184,6 +211,7 @@ Button.propTypes = {
    *
    * @type { 'primary' | 'complementary' | 'success' | 'danger' | 'warning'}
    */
+
   type: PropTypes.string,
 };
 

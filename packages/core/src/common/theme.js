@@ -18,7 +18,7 @@ const colors = {
 const fontFamily = "'Roboto', sans-serif";
 
 const theme = {
-  backgroundColor: 'rgba(255, 255, 255, 1)',
+  backgroundColor: 'transparent',
   button: {
     backgroundColor: colors.grayExtraLight,
     borderRadius: '0.3em',

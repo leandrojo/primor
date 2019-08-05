@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
 
+const unit = 10;
+
 const colors = {
   primary: '#0F29F6',
   secondary: '#007bff',
@@ -31,6 +33,25 @@ const theme = {
   },
   colors,
   fontFamily: 'Roboto, sans-serif',
+  input: {
+    borderColor: '#DFE3E7',
+    borderRadius: 4,
+    borderSize: 1,
+    boxShadow: {
+      color: colors.grayExtraLight,
+      offset: 'inset 0 1px 3px',
+    },
+    fontFamily,
+    fontSize: 12,
+    padding: unit * 1.5,
+    width: '100%',
+  },
+  label: {
+    color: colors.grayDark,
+    fontFamily,
+    fontSize: 14,
+    paddingVertical: unit * 0.4,
+  },
   typography: {
     color: 'rgb(0, 0, 0)',
   },

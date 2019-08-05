@@ -18,7 +18,7 @@ export const StyledButton = styled.button`
   border-radius: ${s('borderRadius')};
   color: ${s('color')};
   cursor: pointer;
-  display: flex;
+  display: inline-flex;
   font-size: ${s('fontSize')};
   font-weight: ${s('fontWeight')};
   height: 2.4em;
@@ -52,7 +52,7 @@ export const StyledButton = styled.button`
           border-bottom-right-radius: ${s('borderRadius')};
           border-top-right-radius: ${s('borderRadius')};
         }
-        `
+      `
     : '')}
 
   ${props => (props.buttonToolbar === true
@@ -66,14 +66,14 @@ export const StyledButton = styled.button`
         &:last-of-type {
           margin-right: 0;
         }
-        `
+      `
     : '')}
 
   ${props => (props.disabled === true
     ? css`
-            color: ${getStyle('colors')('gray')};
-            opacity: 0.8;
-          `
+        color: ${getStyle('colors')('gray')};
+        opacity: 0.8;
+      `
     : '')}
 
   ${(props) => {
@@ -122,6 +122,7 @@ export const StyledButton = styled.button`
 
   ${props => (props.fluid === true
     ? css`
+          display: flex;
           width: 100%;
         `
     : '')}

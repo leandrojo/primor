@@ -29,12 +29,7 @@ export default function registerField(Component) {
        * @description Get yours errors.
        */
 
-      const getErrors = () => {
-        // eslint-disable-next-line no-console
-        console.log(errors);
-        errors.filter(err => err.field === name).map(err => err.message);
-        return [];
-      };
+      const getErrors = () => errors.filter(err => err.field === name).map(err => err.message) || '';
 
       useEffect(() => {
         console.log(name);

@@ -24,14 +24,16 @@ export const FormContext = React.createContext({
   showErrors: false,
 });
 
-const schema = new Schema({});
+let schema = new Schema({});
 
-const Form = ({ children, onSubmit }) => {
+const Form = ({
+  children, onSubmit, initialValues, ...rest
+}) => {
   const [errors, setErrors] = useState([]);
   const [isCompleted, setIsCompleted] = useState(true);
   const [rules, setRules] = useState({});
   const [showErrors, setShowErrors] = useState(false);
-  const [values, setValues] = useState({});
+  const [values, setValues] = useState(initialValues);
 
   function validate(name, value = '') {
     schema.validate(Object.assign(values, objectify({}, [name, value])), (newErrors) => {
@@ -42,25 +44,27 @@ const Form = ({ children, onSubmit }) => {
   const getCount = () => errors.length || 0;
 
   const handleChange = (value, name) => {
-    console.log(objectify({}, [name, value]));
     setValues(Object.assign(values, objectify({}, [name, value])));
     validate(name, value);
   };
 
   const handleSubmit = () => {
     setShowErrors(true);
-    console.log(values);
+    console.log(rules, errors, values);
     if (getCount() === 0) onSubmit(values);
   };
 
   const register = async (name, fieldRules = []) => {
-    console.log(objectify({}, [name, fieldRules]));
-    setRules(Object.assign(rules, objectify({}, [name, fieldRules])));
+    const newRules = Object.assign(rules, objectify({}, [name, fieldRules]));
+    setRules(newRules);
+
+    schema = new Schema(newRules);
+
     validate(name, '');
   };
 
   return (
-    <StyleForm>
+    <StyleForm {...rest}>
       <FormContext.Provider
         value={{
           errors,
@@ -80,11 +84,14 @@ const Form = ({ children, onSubmit }) => {
   );
 };
 
-Form.defaultProps = {};
+Form.defaultProps = {
+  initialValues: {},
+};
 
 Form.propTypes = {
   children: PropTypes.element.isRequired,
   onSubmit: PropTypes.func.isRequired,
+  initialValues: PropTypes.shape({}),
 };
 
 export default Form;

@@ -10,7 +10,7 @@ import { Input } from '..';
 
 const ProviderDecorator = storyFn => <Provider>{storyFn()}</Provider>;
 
-storiesOf('Input', module)
+storiesOf('form/Input', module)
   .addDecorator(ProviderDecorator)
   .add('controlled', () => {
     const InputControlled = () => {

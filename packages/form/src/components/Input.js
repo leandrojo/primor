@@ -2,12 +2,13 @@
 /* eslint-disable react/default-props-match-prop-types */
 /* eslint-disable react/prop-types */
 
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css, ThemeContext } from 'styled-components';
+import { transparentize } from 'polished';
 import Masker from 'vanilla-masker';
 
-import { css, getStyle } from '@primor/core/src/common/theme';
+import { getStyle } from '@primor/core/src/common/theme';
 
 import { FormContext } from './Form';
 import registerField from './registerField';
@@ -28,11 +29,13 @@ s.input = getStyle('input');
 
 const StyledInput = styled.input`
   appearance: none;
-  border: ${s.input('borderSize')}px solid ${s.input('borderColor')};
-  border-radius: ${s.input('borderRadius')}px;
+  background-color: ${s.input('backgroundColor')};
+  border: ${s.input('borderSize')} solid ${s.input('borderColor')};
+  border-radius: ${s.input('borderRadius')};
   box-shadow: none;
-  font-size: ${s.input('fontSize')}px;
-  padding: ${s.input('padding')}px;
+  color: ${s.input('color')};
+  font-size: ${s.input('fontSize')};
+  padding: ${s.input('padding')};
   width: ${s.input('width')};
 
   &:focus {
@@ -43,7 +46,7 @@ const StyledInput = styled.input`
   ${props => (props.danger === true
     ? css`
       border-color: ${props.theme.colors.danger};
-      box-shadow: 0 0 0 4px #ffe8e6;
+      box-shadow: 0 0 0 4px ${transparentize(0.9, props.theme.colors.danger)};
       `
     : '')}
 `;
@@ -74,13 +77,14 @@ const Label = styled.label`
 `;
 
 const Warn = styled.div`
-  padding-top: 5;
+  padding-top: 5px;
 `;
 
+// TODO: Criar componente font size.
 const WarnText = styled.span`
   color: ${props => props.theme.colors.danger};
   font-family: ${props => props.theme.fontFamily};
-  font-size: ${props => props.theme.typography.fontSize} * 0.8;
+  font-size: 12px;
 `;
 
 const ref = React.createRef();
@@ -99,11 +103,15 @@ export const Input = ({
   value,
   ...rest
 }) => {
+  const theme = useContext(ThemeContext);
+
   const [isInputFocus, setIsInputFocus] = useState(false);
   const [showInputErrors, setShowInputErrors] = useState(false);
   const [state, setState] = useState({
     value: '',
   });
+
+  const showErrors = showInputErrors || rest.showErrors;
 
   function format(unformatted) {
     const moneyFormatter = {
@@ -165,10 +173,7 @@ export const Input = ({
   };
 
   function renderError() {
-    const showErrors = showInputErrors || rest.showErrors;
-
     if (errors.length === 0 || showErrors === false) return null;
-
     return (
       <Warn>
         <WarnText>{errors[0]}</WarnText>
@@ -192,6 +197,7 @@ export const Input = ({
             {renderLabel()}
             <StyledInput
               disabled={isDisable}
+              danger={errors.length !== 0 && showErrors}
               id={id}
               name={name}
               onChange={handleChange}

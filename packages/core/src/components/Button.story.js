@@ -9,7 +9,7 @@ import { Button, Provider } from '..';
 
 const ProviderDecorator = storyFn => <Provider>{storyFn()}</Provider>;
 
-storiesOf('Button', module)
+storiesOf('core/Button', module)
   .addDecorator(ProviderDecorator)
   .add('with text', () => <Button onClick={action('clicked')}>Hello Button</Button>)
   .add('with some emoji', () => (

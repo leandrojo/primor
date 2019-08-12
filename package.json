@@ -32,5 +32,8 @@
     "lerna": "^3.16.4",
     "webpack": "^4.39.1",
     "webpack-cli": "^3.3.6"
+  },
+  "dependencies": {
+    "polished": "^3.4.1"
   }
 }

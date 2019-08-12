@@ -3,8 +3,7 @@
 
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
-import { styled } from '../common/theme';
+import styled from 'styled-components';
 
 const StyledButtonToolbar = styled.div`
   display: inline-flex;

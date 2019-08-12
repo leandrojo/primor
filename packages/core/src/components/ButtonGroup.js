@@ -2,8 +2,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { useState } from 'react';
-
-import { styled } from '../common/theme';
+import styled from 'styled-components';
 
 const StyledButtonGroup = styled.div`
   display: inline-flex;

@@ -2,32 +2,38 @@
 /* eslint-disable react/prop-types */
 
 import React, { useContext, useEffect } from 'react';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-import { css, getStyle, styled } from '../common/theme';
+import { getStyle } from '../common/theme';
 
 import { ButtonGroupContext } from './ButtonGroup';
 import { ButtonToolbarContext } from './ButtonToolbar';
 
-const s = getStyle('button');
+const s = {};
+
+['button', 'buttonGroup'].map((key) => {
+  s[key] = getStyle(key);
+  return key;
+});
 
 export const StyledButton = styled.button`
   align-items: center;
-  background-color: ${s('backgroundColor')};
+  background-color: ${s.button('backgroundColor')};
   border: 1px solid transparent;
-  border-radius: ${s('borderRadius')};
-  color: ${s('color')};
+  border-radius: ${s.button('borderRadius')};
+  color: ${s.button('color')};
   cursor: pointer;
   display: inline-flex;
-  font-size: ${s('fontSize')};
-  font-weight: ${s('fontWeight')};
+  font-size: ${s.button('fontSize')};
+  font-weight: ${s.button('fontWeight')};
   height: 2.4em;
   justify-content: center;
   line-height: 2.3em;
   margin: 0;
   outline: none;
   overflow: hidden;
-  padding: 0 ${s('paddingHorizontal')};
+  padding: 0 ${s.button('paddingHorizontal')};
   text-align: center;
   touch-action: manipulation;
   transition: all .2s cubic-bezier(.06,.67,.37,.99);
@@ -37,20 +43,20 @@ export const StyledButton = styled.button`
 
   ${props => (props.buttonGroup === true
     ? css`
-        background-color: white;
-        border: 1px solid black;
+        background-color: ${s.buttonGroup('backgroundColor')};
+        border: 1px solid ${s.buttonGroup('borderColor')};
         border-left: none;
         border-radius: 0;
 
         &:first-of-type {
-          border: 1px solid black;
-          border-bottom-left-radius: ${s('borderRadius')};
-          border-top-left-radius: ${s('borderRadius')};
+          border: 1px solid ${s.buttonGroup('borderColor')};
+          border-bottom-left-radius: ${s.button('borderRadius')};
+          border-top-left-radius: ${s.button('borderRadius')};
         }
 
         &:last-of-type {
-          border-bottom-right-radius: ${s('borderRadius')};
-          border-top-right-radius: ${s('borderRadius')};
+          border-bottom-right-radius: ${s.button('borderRadius')};
+          border-top-right-radius: ${s.button('borderRadius')};
         }
       `
     : '')}
@@ -71,7 +77,7 @@ export const StyledButton = styled.button`
 
   ${props => (props.disabled === true
     ? css`
-        color: ${getStyle('colors')('gray')};
+        color: ${props.theme.colors.gray};
         opacity: 0.8;
       `
     : '')}
@@ -108,7 +114,7 @@ export const StyledButton = styled.button`
         return css`
           background-color: transparent;
           box-shadow: none;
-          color: ${getStyle('colors')(props.disabled ? 'grayDark' : 'secondary')};
+          color: ${props.theme.colors[props.disabled ? 'grayDark' : 'acent']};
 
           &:hover {
             box-shadow: none;

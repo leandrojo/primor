@@ -12,7 +12,7 @@ export function isObject(item) {
  * @param target
  * @param ...sources
  */
-export function mergeDeep(target, ...sources) {
+function mergeDeep(target, ...sources) {
   if (!sources.length) return target;
   const source = sources.shift();
 
@@ -30,3 +30,5 @@ export function mergeDeep(target, ...sources) {
 
   return mergeDeep(target, ...sources);
 }
+
+export default mergeDeep;

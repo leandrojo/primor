@@ -18,8 +18,45 @@ const Footer = styled.div`
   margin-top: 20px;
 `;
 
-storiesOf('Form', module)
+storiesOf('form', module)
   .addDecorator(ProviderDecorator)
+  .add('advanced validation (email)', () => {
+    const FormSample = () => {
+      const onSubmit = () => action('submit');
+
+      return (
+        <Form autoComplete="off" onSubmit={onSubmit} initialValues={{}}>
+          <Input
+            label="E-mail"
+            name="email"
+            rules={[
+              {
+                type: 'string',
+                required: true,
+                message: 'Campo obrigatório.',
+              },
+              {
+                validator(rule, value, callback, source) {
+                  const re = /\S+@\S+\.\S+/;
+                  const errors = [];
+                  if (re.test(source.email) === false) {
+                    errors.push(new Error('Entre com um e-mail válido.').message);
+                  }
+                  callback(errors);
+                },
+              },
+            ]}
+          />
+
+          <Footer>
+            <Submit>Salvar</Submit>
+          </Footer>
+        </Form>
+      );
+    };
+
+    return <FormSample />;
+  })
   .add('rules when submit', () => {
     const FormSample = () => {
       const onSubmit = () => action('submit');

@@ -9,7 +9,7 @@ import { Button, ButtonGroup, Provider } from '..';
 
 const ProviderDecorator = storyFn => <Provider>{storyFn()}</Provider>;
 
-storiesOf('ButtonGroup', module)
+storiesOf('core/ButtonGroup', module)
   .addDecorator(ProviderDecorator)
   .add('with text', () => (
     <ButtonGroup>

@@ -8,7 +8,7 @@ export const colors = {
   primary: '#0f29f6',
   secondary: '#007bff',
   complementary: '#ff7a00',
-  acent: '#03dac6',
+  acent: '#595694',
   danger: '#b00020',
   success: '#1DB954',
   warning: '#ffc107',
@@ -105,7 +105,7 @@ export const components = {
 };
 
 const theme = {
-  backgroundColor: 'white',
+  backgroundColor: '#ffffff',
   colors,
   components,
   fontFamily,

@@ -2,7 +2,7 @@
 import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { FormContext } from './Form';
+import { FormContext } from './Form/Form';
 
 export default function registerField(Component) {
   return (() => {

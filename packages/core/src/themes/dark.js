@@ -1,6 +1,6 @@
 import { transparentize } from 'polished';
 
-import mergeDeep from '../mergeDeep';
+import mergeDeep from '../common/mergeDeep';
 
 import light, { fontFamily, unit } from './light';
 

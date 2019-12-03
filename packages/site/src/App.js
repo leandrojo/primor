@@ -1,6 +1,6 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { Provider } from '@primor/core';
+import { theme, Provider } from '@primor/core';
 
 import {
   Header,
@@ -57,19 +57,29 @@ const components = {
   GlobalStyle: CustomGlobalStyle,
 };
 
-const theme = {
-  colors: {
-    primary: 'red'
-  },
-};
-
 function App() {
+  const [isDark, setIsDark] = React.useState(false);
+
+  React.useEffect(() => {
+    theme.register({
+      colors: {
+        primary: 'pink',
+        acent: 'red'
+      }
+    }, 'dark')
+  }, []);
+
+  React.useEffect(() => {
+    theme.select(isDark ? 'dark' : 'light');
+  }, [isDark]);
+
   return (
-    <Provider components={components} theme={theme}>
+    <Provider components={components}>
       <Header />
       <Promo />
       <Features />
       <Footer />
+      <button type="button" onClick={() => setIsDark(isDark === false)}>change</button>
     </Provider>
   );
 }

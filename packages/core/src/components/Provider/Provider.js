@@ -1,4 +1,3 @@
-/* global window, localStorage */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
@@ -7,7 +6,7 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 
-import { dark, light } from '../../common/theme';
+import theme, { dark, light } from '../../common/theme';
 
 import Button from '../Button/Button';
 
@@ -54,18 +53,12 @@ const DefaultGlobalStyle = createGlobalStyle`
 const Provider = ({ children, components }) => {
   const { GlobalStyle } = components;
 
-  // TODO: Manipulação interna ou externa de tema dark.
-
-  const [isDarkMode, setIsDarkMode] = React.useState(
-    window.matchMedia('(prefers-color-scheme: dark)').matches || false,
-  );
+  // TODO: Criar uma hook que escute as mudanças do tema.
+  const [update, setUpdate] = React.useState(new Date());
 
   useEffect(() => {
-    // System | LocalStorage | Force
-    const mq = window.matchMedia('(prefers-color-scheme: dark)');
-
-    mq.addListener((ev) => {
-      setIsDarkMode(ev.matches);
+    theme.addListener(() => {
+      setUpdate(new Date());
     });
   }, []);
 
@@ -73,7 +66,7 @@ const Provider = ({ children, components }) => {
   // TODO: Verificar como indicar um tema diretamente, night shift, por exemplo.
 
   return (
-    <ThemeProvider theme={isDarkMode ? dark : light}>
+    <ThemeProvider theme={theme.getState().theme}>
       <>
         <GlobalStyle />
         {children}

@@ -1,4 +1,5 @@
 export { normalize } from './common';
+export { default as theme } from './common/theme';
 
 export { default as Accordion } from './components/Accordion/Accordion';
 export { default as Breadcrumb } from './components/Breadcrumb/Breadcrumb';
